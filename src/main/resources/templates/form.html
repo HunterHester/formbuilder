@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Dynamic Form</title>
+</head>
+<body>
+<h1>Generated Form</h1>
+<form action="/download-pdf" method="post">
+    <div th:each="field : ${fields}">
+        <label th:text="${field.label}"></label><br/>
+        <input th:attr="type=${field.type}" name="field" /><br/><br/>
+    </div>
+    <button type="submit">Submit</button>
+</form>
+</body>
+</html>
