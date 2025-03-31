@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 import org.thymeleaf.context.Context;
 import org.springframework.beans.factory.annotation.Autowired;
+import com.example.formbuilder.model.FormConfig;
+import com.example.formbuilder.model.FormConfigFactory;
 
 import java.io.ByteArrayOutputStream;
 import java.util.List;
@@ -24,15 +26,11 @@ public class FormController {
     private SpringTemplateEngine templateEngine;
 
     @GetMapping("/form")
-    public String showForm(Model model) {
-        List<FormField> fields = List.of(
-                new FormField("Employee Name", "text"),
-                new FormField("Department", "text"),
-                new FormField("Amount", "number"),
-                new FormField("Date", "date")
-        );
+    public String showForm(@RequestParam String type, Model model) {
+        FormConfig config = FormConfigFactory.getForm(type);
+        model.addAttribute("title", config.getTitle());
+        model.addAttribute("fields", config.getFields());
 
-        model.addAttribute("fields", fields);
         return "form";
     }
 
