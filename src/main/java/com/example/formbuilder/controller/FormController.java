@@ -1,6 +1,6 @@
 package com.example.formbuilder.controller;
 
-import com.example.formbuilder.model.FormField;
+//import com.example.formbuilder.model.FormField;
 import com.openhtmltopdf.pdfboxout.PdfRendererBuilder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -18,6 +18,7 @@ import com.example.formbuilder.model.FormConfigFactory;
 
 import java.io.ByteArrayOutputStream;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class FormController {
@@ -53,37 +54,33 @@ public class FormController {
 
     @PostMapping("/download-pdf")
     public ResponseEntity<byte[]> generatePdf(
-            @RequestParam("CustomerName") String customerName,
-            @RequestParam("CustomerID") String customerId,
-            @RequestParam("InitialInvestment") String investmentAmount,
-            @RequestParam("InvestmentDate") String investmentDate,
-            @RequestParam("type") String type
-            ) {
-                Context context = new Context();
-                context.setVariable("customerName", customerName);
-                context.setVariable("customerId", customerId);
-                context.setVariable("investmentAmount", investmentAmount);
-                context.setVariable("investmentDate", investmentDate);
+            @RequestParam Map<String, String> allParams
+    ) {
+        String type = allParams.get("type");
+        Context context = new Context();
 
+        // Pass all parameters to the template
+        allParams.forEach(context::setVariable);
 
-                String templatePath = type + "/pdf";
-                String html = templateEngine.process(templatePath, context);
+        String templatePath = type + "/pdf";
+        String html = templateEngine.process(templatePath, context);
 
-                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-                PdfRendererBuilder builder = new PdfRendererBuilder();
-                builder.withHtmlContent(html, null);
-                builder.toStream(outputStream);
-                try {
-                    builder.run();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        PdfRendererBuilder builder = new PdfRendererBuilder();
+        builder.withHtmlContent(html, null);
+        builder.toStream(outputStream);
+        try {
+            builder.run();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-                byte[] pdfBytes = outputStream.toByteArray();
+        byte[] pdfBytes = outputStream.toByteArray();
 
-                return ResponseEntity.ok()
-                        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=form-data.pdf")
-                        .contentType(MediaType.APPLICATION_PDF)
-                        .body(pdfBytes);
-            }
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=form-data.pdf")
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(pdfBytes);
+    }
+
 }

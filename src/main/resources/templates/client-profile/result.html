@@ -71,8 +71,8 @@
 <form method="post" action="/download-pdf">
     <input type="hidden" name="CustomerName" th:value="${submittedValues[0]}" />
     <input type="hidden" name="CustomerID" th:value="${submittedValues[1]}" />
-    <input type="hidden" name="InitialInvestment" th:value="${submittedValues[2]}" />
-    <input type="hidden" name="DateofBirth" th:value="${submittedValues[3]}" />
+    <input type="hidden" name="PhoneNumber" th:value="${submittedValues[2]}" />
+    <input type="hidden" name="ContactMethod" th:value="${submittedValues[3]}" />
     <input type="hidden" name="type" th:value="${formType}" />
     <button type="submit">Download PDF</button>
 </form>
