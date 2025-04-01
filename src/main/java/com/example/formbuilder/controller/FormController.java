@@ -25,6 +25,12 @@ public class FormController {
     @Autowired
     private SpringTemplateEngine templateEngine;
 
+    @GetMapping("/")
+    public String home(Model model) {
+        model.addAttribute("availableForms", List.of("investment", "client-profile"));
+        return "home";
+    }
+
     @GetMapping("/form")
     public String showForm(@RequestParam String type, Model model) {
         FormConfig config = FormConfigFactory.getForm(type);
