@@ -10,21 +10,17 @@
         padding: 40px;
         color: #2c3e50;
     }
-
     h1 {
         font-size: 26px;
         margin-bottom: 30px;
     }
-
     ul {
         list-style: none;
         padding: 0;
     }
-
     li {
         margin-bottom: 15px;
     }
-
     a {
         text-decoration: none;
         color: #ffffff;
@@ -33,7 +29,6 @@
         border-radius: 5px;
         font-weight: bold;
     }
-
     a:hover {
         background-color: #1a252f;
     }
@@ -42,13 +37,27 @@
 <body>
 
 <h1>Select a Form to Submit</h1>
-
-<ul>
-  <li th:each="form : ${availableForms}">
-    <a th:href="@{/form(type=${form})}" th:text="${#strings.capitalize(#strings.replace(form, '-', ' ')) + ' Form'}"></a>
-    <br></br>
-  </li>
+<ul id="formList">
+  <li>Loading forms...</li>
 </ul>
+
+<script>
+  fetch('/api/forms')
+      .then(res => res.json())
+      .then(forms => {
+          console.log(forms)
+          const list = document.getElementById('formList');
+          list.innerHTML = '';
+          forms.forEach(type => {
+              const li = document.createElement('li');
+              const link = document.createElement('a');
+              link.href = `/form-api?type=${type}`;
+              link.textContent = type.charAt(0).toUpperCase() + type.slice(1).replace('-', ' ') + ' Form';
+              li.appendChild(link);
+              list.appendChild(li);
+          });
+      });
+</script>
 
 </body>
 </html>

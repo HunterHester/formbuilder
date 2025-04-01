@@ -41,6 +41,12 @@ public class FormController {
         return type + "/form";
     }
 
+    @GetMapping("/form-api")
+    public String showApiDrivenForm(@RequestParam String type, Model model) {
+        model.addAttribute("formType", type); // we’ll fetch fields via JS
+        return "form-api";
+    }
+
     @PostMapping("/submit")
     public String handleSubmit(
             @RequestParam("field") List<String> values,

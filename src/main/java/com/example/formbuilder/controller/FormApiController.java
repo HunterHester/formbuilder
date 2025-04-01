@@ -6,10 +6,16 @@ import com.example.formbuilder.dto.FormConfigResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.Map;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/forms")
 public class FormApiController {
+
+    @GetMapping
+    public List<String> getAvailableFormTypes() {
+        return List.of("investment", "client-profile");
+    }
 
     @GetMapping("/{type}")
     public ResponseEntity<FormConfigResponse> getForm(@PathVariable String type) {
