@@ -1,4 +1,7 @@
-package com.example.formbuilder.model;
+package com.example.formbuilder.model.configs;
+
+import com.example.formbuilder.model.FormConfig;
+import com.example.formbuilder.model.FormField;
 
 import java.util.List;
 

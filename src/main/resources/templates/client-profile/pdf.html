@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <style>
+        body {
+            font-family: "Helvetica", sans-serif;
+            padding: 30px;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .field {
+            margin-bottom: 12px;
+        }
+
+        .field label {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<h1>Client Profile Confirmation</h1>
+
+<div class="field">
+    <label>Full Name:</label> <span th:text="${customerName}"></span>
+</div>
+<div class="field">
+    <label>Email Address:</label> <span th:text="${customerId}"></span>
+</div>
+<div class="field">
+    <label>Phone Number:</label> <span th:text="${investmentAmount}"></span>
+</div>
+<div class="field">
+    <label>Preferred Contact Method:</label> <span th:text="${investmentDate}"></span>
+</div>
+
+<p style="margin-top: 20px;">Thank you for submitting your client profile. We will be in touch shortly.</p>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Client Profile Submitted</title>
+    <style>
+        body {
+            font-family: "Helvetica", sans-serif;
+            font-size: 16px;
+            color: #2c3e50;
+            background-color: #f9f9f9;
+            padding: 40px;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #2c3e50;
+            padding-bottom: 10px;
+        }
+
+        .field {
+            margin-bottom: 15px;
+        }
+
+        .field span.label {
+            font-weight: bold;
+            display: inline-block;
+            min-width: 160px;
+        }
+
+        form {
+            margin-top: 30px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #1a252f;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Client Profile Submitted</h1>
+
+<div class="field">
+    <span class="label">Full Name:</span>
+    <span th:text="${submittedValues[0]}"></span>
+</div>
+<div class="field">
+    <span class="label">Email Address:</span>
+    <span th:text="${submittedValues[1]}"></span>
+</div>
+<div class="field">
+    <span class="label">Phone Number:</span>
+    <span th:text="${submittedValues[2]}"></span>
+</div>
+<div class="field">
+    <span class="label">Preferred Contact:</span>
+    <span th:text="${submittedValues[3]}"></span>
+</div>
+
+<form method="post" action="/download-pdf">
+    <input type="hidden" name="CustomerName" th:value="${submittedValues[0]}" />
+    <input type="hidden" name="CustomerID" th:value="${submittedValues[1]}" />
+    <input type="hidden" name="InitialInvestment" th:value="${submittedValues[2]}" />
+    <input type="hidden" name="DateofBirth" th:value="${submittedValues[3]}" />
+    <input type="hidden" name="type" th:value="${formType}" />
+    <button type="submit">Download PDF</button>
+</form>
+
+</body>
+</html>

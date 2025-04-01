@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title th:text="${title}">Client Profile Form</title>
+</head>
+<body>
+<h1 th:text="${title}"></h1>
+
+<form method="post" action="/submit">
+    <input type="hidden" name="type" th:value="${formType}" />
+
+    <div th:each="field : ${fields}">
+        <label th:text="${field.label}"></label><br/>
+        <input th:attr="type=${field.type}" name="field" /><br/><br/>
+    </div>
+
+    <button type="submit">Submit</button>
+</form>
+</body>
+</html>
