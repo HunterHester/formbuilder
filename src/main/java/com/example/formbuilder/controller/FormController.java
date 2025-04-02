@@ -32,18 +32,20 @@ public class FormController {
         return "home";
     }
 
-    @GetMapping("/form")
-    public String showForm(@RequestParam String type, Model model) {
-        FormConfig config = FormConfigFactory.getForm(type);
-        model.addAttribute("title", config.getTitle());
-        model.addAttribute("fields", config.getFields());
-        model.addAttribute("formType", type);
-        return type + "/form";
-    }
+
+    //replaced by form-api
+//    @GetMapping("/form")
+//    public String showForm(@RequestParam String type, Model model) {
+//        FormConfig config = FormConfigFactory.getForm(type);
+//        model.addAttribute("title", config.getTitle());
+//        model.addAttribute("fields", config.getFields());
+//        model.addAttribute("formType", type);
+//        return type + "/form";
+//    }
 
     @GetMapping("/form-api")
     public String showApiDrivenForm(@RequestParam String type, Model model) {
-        model.addAttribute("formType", type); // we’ll fetch fields via JS
+        model.addAttribute("formType", type);
         return "form-api";
     }
 
@@ -60,13 +62,13 @@ public class FormController {
 
     @PostMapping("/download-pdf")
     public ResponseEntity<byte[]> generatePdf(
-            @RequestParam Map<String, String> allParams
+            @RequestParam Map<String, String> formData
     ) {
         String type = allParams.get("type");
         Context context = new Context();
 
         // Pass all parameters to the template
-        allParams.forEach(context::setVariable);
+        formData.forEach(context::setVariable);
 
         String templatePath = type + "/pdf";
         String html = templateEngine.process(templatePath, context);
