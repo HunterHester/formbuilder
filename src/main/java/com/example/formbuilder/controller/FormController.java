@@ -64,7 +64,7 @@ public class FormController {
     public ResponseEntity<byte[]> generatePdf(
             @RequestParam Map<String, String> formData
     ) {
-        String type = allParams.get("type");
+        String type = formData.get("type");
         Context context = new Context();
 
         // Pass all parameters to the template
